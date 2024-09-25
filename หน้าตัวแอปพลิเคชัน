@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Story App</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .navbar { background: #333; color: white; padding: 10px; }
+        .navbar a { color: white; margin: 0 15px; text-decoration: none; }
+        .container { padding: 20px; }
+        textarea { width: 100%; height: 150px; }
+        canvas { border: 1px solid #ccc; margin-top: 10px; }
+        .story { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">หน้าแรก</a>
+        <a href="/stories">ดูเรื่อง</a>
+        <a href="/about">เกี่ยวกับเรา</a>
+    </div>
+
+    <div class="container">
+        <h1>ส่งเรื่องของคุณ</h1>
+        <form action="/submit" method="POST">
+            <textarea name="story" required placeholder="เขียนนิยายที่นี่..."></textarea>
+            <button type="submit">ส่งเรื่อง</button>
+        </form>
+
+        <h2>เลือกภาพสำหรับตอนนี้</h2>
+        <input type="file" id="imageUpload" />
+        <canvas id="canvas" width="400" height="300"></canvas>
+        <script>
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            document.getElementById('imageUpload').addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = () => ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            });
+        </script>
+
+        <h2>เรื่องที่ส่ง</h2>
+        <div id="storyList">
+            {% for story in stories %}
+                <div class="story">{{ story }}</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Story App. สงวนลิขสิทธิ์.</p>
+    </footer>
+</body>
+</html>
