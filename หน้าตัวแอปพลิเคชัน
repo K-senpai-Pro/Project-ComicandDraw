@@ -46,6 +46,8 @@
             });
         </script>
 
+        <h2>จำนวนผู้เข้าชม: {{ visitor_count }}</h2>
+
         <h2>เรื่องที่ส่ง</h2>
         <div id="storyList">
             {% for story in stories %}
@@ -55,6 +57,11 @@
     </div>
 
     <footer>
+        <p>© 2024 Story App. สงวนลิขสิทธิ์.</p>
+    </footer>
+</body>
+</html>
+
         <p>© 2024 Story App. สงวนลิขสิทธิ์.</p>
     </footer>
 </body>
